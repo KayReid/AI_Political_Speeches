@@ -1,6 +1,4 @@
-
-inclinton = ["Clinton_2016-07-28.txt", "Clinton_2016-07-29.txt", "Clinton_2016-08-01.txt"]
-intrump = ["Trump_2016-07-22.txt", "Trump_2016-07-25.txt", "Trump_2016-07-26.txt"]
+import os
 outclinton = open("clinton.txt", "w+")
 outtrump = open("trump.txt", "w+")
 delete_list = ["hillary", "clinton", "donald", "trump", "mike",
@@ -27,8 +25,8 @@ delete_list = ["hillary", "clinton", "donald", "trump", "mike",
                "brad", "parscale", "sam", "nunberg", "gates", "caputo",
                "vladimir", "putin", "democratic", "republican", "democrat",
                "republican"]
-for f in inclinton:
-    infile = open(f)
+for f in os.listdir("clinton"):
+    infile = open("clinton/"+f)
     for line in infile:
         a = line.lower()
         for word in delete_list:
@@ -37,8 +35,8 @@ for f in inclinton:
         outclinton.write(b)
     infile.close()
 outclinton.close()
-for f in intrump:
-    infile = open(f)
+for f in os.listdir("trump"):
+    infile = open("trump/"+f)
     for line in infile:
         a = line.lower()
         for word in delete_list:
