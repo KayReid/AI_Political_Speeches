@@ -1,4 +1,5 @@
 import re
+from collections import defaultdict
 from sklearn.feature_extraction import DictVectorizer
 from sklearn.feature_extraction.text import CountVectorizer
 
@@ -14,7 +15,7 @@ def word_generator(textfile: str):
 
     # TODO make regex more robust
     # this separates the tokens
-    split_pattern = re.compile('[\s?.!;:\-(),]')
+    split_pattern = re.compile('[\s?.!;:\-(),\\\]')
 
     for line in f:
         words = (w for w in split_pattern.split(line) if w)
@@ -22,8 +23,30 @@ def word_generator(textfile: str):
             yield w
 
 
+# TODO: do not currently use a dictVector
+def tokens(doc):
+    """Extract tokens from doc.
+
+    This uses a simple regex to break strings into tokens. For a more
+    principled approach, see CountVectorizer or TfidfVectorizer.
+    """
+    return (tok.lower() for tok in re.findall(r"\w+", doc))
+
+
+# TODO: do not currently use a dictVector
+def token_freqs(doc):
+    """Extract a dict mapping tokens from doc to their frequencies."""
+    freq = defaultdict(int)
+    for tok in tokens(doc):
+        freq[tok] += 1
+    return freq
+
+
 # split into sets of 100
-def split_data(textfile: str):
+def vectorize(textfile: str):
+    vec = CountVectorizer()
+    # vectorizer = DictVectorizer()
+
     dataset = []
     data = ""
 
@@ -35,9 +58,18 @@ def split_data(textfile: str):
             # group into sets of 100
             for _ in range(100):
                 data += " " + next(generator)
-            dataset.append(data)
+            dataset.append([data])
     except StopIteration:
         print("Document processed.")
+
+    for data in dataset:
+        x = vec.fit_transform(data).toarray()
+        print(x)
+        # y = vectorizer.fit_transform(token_freqs(d) for d in data)
+        # print(y)
+
+    # return dataset
+    return vec
 
 
 # put into correct format
@@ -45,17 +77,10 @@ def categorize(sample, category):
     return [sample, category]
 
 
-def vectorize(data):
-    
-
-
-    # use the dictvectorize?
-    # https://scikit-learn.org/dev/modules/feature_extraction.html#common-vectorizer-usage
-    # https://www.quora.com/What-are-the-ways-to-load-custom-dataset-for-scikit-learn-What-is-the-format-of-the-dataset-that-is-to-be-used-in-scikit-I-have-a-dataset-that-is-in-the-form-of-a-text-file
-    # https://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.text.CountVectorizer.html#sklearn.feature_extraction.text.CountVectorizer
-    pass
-
 if __name__ == "__main__":
+    data = vectorize("test.txt")
+
+    # print(data)
 
     pass
 
