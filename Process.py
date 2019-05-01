@@ -1,6 +1,7 @@
 import re
 from collections import defaultdict
 from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.feature_extraction.text import TfidfTransformer
 
 
 def word_generator(textfile: str):
@@ -61,12 +62,20 @@ def vectorize(textfile: str):
     except StopIteration:
         print("Document processed.")
 
+    # initialize x to use it outside of the for loop
+    x = vec
+
     for data in dataset:
         x = vec.fit_transform(data).toarray()
-        print(x)
+
+    print(x.shape)
+
 
     # https: // scikit - learn.org / stable / tutorial / text_analytics / working_with_text_data.html
-    # TODO: you're at the tokenizing text part
+    # TODO: you're at the occ to frequency part
+    tf_transformer = TfidfTransformer(use_idf=False).fit(x)
+    X_train_tf = tf_transformer.transform(x)
+    print(X_train_tf.shape)
 
     return vec
 
@@ -77,7 +86,5 @@ def categorize(sample, category):
 
 
 if __name__ == "__main__":
+
     data = vectorize("test.txt")
-
-    pass
-
