@@ -1,6 +1,5 @@
 import re
 from collections import defaultdict
-from sklearn.feature_extraction import DictVectorizer
 from sklearn.feature_extraction.text import CountVectorizer
 
 
@@ -65,10 +64,10 @@ def vectorize(textfile: str):
     for data in dataset:
         x = vec.fit_transform(data).toarray()
         print(x)
-        # y = vectorizer.fit_transform(token_freqs(d) for d in data)
-        # print(y)
 
-    # return dataset
+    # https: // scikit - learn.org / stable / tutorial / text_analytics / working_with_text_data.html
+    # TODO: you're at the tokenizing text part
+
     return vec
 
 
@@ -79,8 +78,6 @@ def categorize(sample, category):
 
 if __name__ == "__main__":
     data = vectorize("test.txt")
-
-    # print(data)
 
     pass
 
