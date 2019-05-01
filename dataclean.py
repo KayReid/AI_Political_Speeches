@@ -1,6 +1,6 @@
 import os
-outclinton = open("clinton.txt", "w+")
-outtrump = open("trump.txt", "w+")
+outclinton = open("text/clinton.txt", "w+")
+outtrump = open("text/trump.txt", "w+")
 delete_list = ["hillary", "clinton", "donald", "trump", "mike",
                "pence", "bill", "chelsea", "barack", "obama", "joe",
                "biden", "michelle", "bernie", "sanders", "ted", "cruz",
@@ -24,9 +24,9 @@ delete_list = ["hillary", "clinton", "donald", "trump", "mike",
                "rudy", "giuliani", "palatucci", "cohen", "arthur", "culvahouse",
                "brad", "parscale", "sam", "nunberg", "gates", "caputo",
                "vladimir", "putin", "democratic", "republican", "democrat",
-               "republican"]
-for f in os.listdir("clinton"):
-    infile = open("clinton/"+f)
+               "republican", "tim", "kaine"]
+for f in os.listdir("text/clinton"):
+    infile = open("text/clinton/"+f)
     for line in infile:
         a = line.lower()
         for word in delete_list:
@@ -35,8 +35,8 @@ for f in os.listdir("clinton"):
         outclinton.write(b)
     infile.close()
 outclinton.close()
-for f in os.listdir("trump"):
-    infile = open("trump/"+f)
+for f in os.listdir("text/trump"):
+    infile = open("text/trump/"+f)
     for line in infile:
         a = line.lower()
         for word in delete_list:
