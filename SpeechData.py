@@ -1,3 +1,5 @@
+# learn from... https://scikit-learn.org/stable/tutorial/text_analytics/working_with_text_data.html
+
 # import data set
 from sklearn.naive_bayes import MultinomialNB # look up documentation on sklearn
 
