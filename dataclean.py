@@ -7,11 +7,11 @@ delete_list = ["hillary", "clinton", "donald", "trump", "mike",
                "gary", "johnson", "jill", "stein", "lincoln", "chafee",
                "lawrence", "lessig", "martin", "o'malley", "webb", "jeb",
                "bush", "ben", "carson", "chris", "christie", "carly",
-               "fiorina" "jim", "gilmore", "lindsey", "graham", "mike",
+               "fiorina", "jim" , "gilmore", "lindsey", "graham", "mike",
                "huckabee", "bobby", "jindal", "john", "kasich", "george",
-               "pataki", "rand", "paul", "rick", "perry", "santorum",
+               "pataki", " rand ", "paul", "rick", "perry", "santorum",
                "marco", "rubio", "scott", "walker", "andrew", "cuomo",
-               "al", "gore", "dennis", "kucinich", "brian", "schweitzer",
+               " al ", "gore", "dennis", "kucinich", "brian", "schweitzer",
                "elizabeth", "warren", "kelly", "ayotte", "nikki", "haley",
                "peter", "king", "susana", "martinez", "mitt", "romney",
                "anthony", "weiner", "huma", "abedin", "ryan", "brian",
@@ -24,24 +24,34 @@ delete_list = ["hillary", "clinton", "donald", "trump", "mike",
                "rudy", "giuliani", "palatucci", "cohen", "arthur", "culvahouse",
                "brad", "parscale", "sam", "nunberg", "gates", "caputo",
                "vladimir", "putin", "democratic", "republican", "democrat",
-               "republican", "tim", "kaine"]
+               "<audience:", "<crowd:", "<title:", "<title=", "<question:", "<unknown:",
+               "<date:", "republican", "tim", "kaine", "hillary!", "(applause)",
+               "<applause>", "(inaudible)", "<booing>", "<ph>", "<:>", "<:", ">",
+               "(laughter)", "(ph)"]
+line_list = ["<audience", "<crowd", "<title", "<date", "<question"]
+
 for f in os.listdir("text/clinton"):
     infile = open("text/clinton/"+f)
     for line in infile:
         a = line.lower()
         for word in delete_list:
-            b = a.replace(word, "")
-            a = b
-        outclinton.write(b)
+            a = a.replace(word, "")
+        #for word in line_list:
+         #   if (line.find(word)):
+          #      a = ""
+        outclinton.write(a)
     infile.close()
 outclinton.close()
+
 for f in os.listdir("text/trump"):
     infile = open("text/trump/"+f)
     for line in infile:
         a = line.lower()
         for word in delete_list:
-            b = a.replace(word, "")
-            a = b
-        outtrump.write(b)
+            a = a.replace(word, "")
+        # for word in line_list:
+           # if (line.find(word)):
+                #a = ""
+        outtrump.write(a)
     infile.close()
-outclinton.close()
+outtrump.close()
