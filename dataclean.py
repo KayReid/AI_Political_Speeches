@@ -27,7 +27,8 @@ delete_list = ["hillary", "clinton", "donald", "trump", "mike",
                "<audience", "<crowd", "<title", "<title=", "<question:", "<unknown:",
                "<date:", "republican", "tim", "kaine", "hillary!", "(applause)",
                "<applause>", "(inaudible)", "<booing>", "<ph>", "<:>", "<:", ">",
-               "(laughter)", "(ph)", ":", "<unidentified female", "<unidentified male"]
+               "(laughter)", "(ph)", ":", "<unidentified female", "<unidentified male",
+               ",", ".","!","\"", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
 line_list = ["<audience", "<crowd", "<title", "<date", "<question"]
 
 for f in os.listdir("text/clinton"):
