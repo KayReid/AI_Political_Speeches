@@ -3,7 +3,7 @@ outclinton = open("text/clinton.txt", "w+")
 outtrump = open("text/trump.txt", "w+")
 delete_list = ["hillary", "clinton", "donald", "trump", "mike",
                "pence", "bill", "chelsea", "barack", "obama", "joe",
-               "biden", "michelle", "bernie", "sanders", "ted", "cruz",
+               "biden", "michelle", "bernie", "sanders", " ted ", "cruz",
                "gary", "johnson", "jill", "stein", "lincoln", "chafee",
                "lawrence", "lessig", "martin", "o'malley", "webb", "jeb",
                "bush", "ben", "carson", "chris", "christie", "carly",
@@ -29,7 +29,7 @@ delete_list = ["hillary", "clinton", "donald", "trump", "mike",
                "<applause>", "(inaudible)", "<booing>", "<ph>", "<:>", "<:", ">", "<",
                "(laughter)", "(ph)", ":", "<unidentified female", "<unidentified male",
                ",", ".","!","\"", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "?",
-               "-", "=", ";", "hannity", "paronto"]
+               "-", "=", ";", "hannity", "paronto", "(off)"]
 
 for f in os.listdir("text/clinton"):
     infile = open("text/clinton/"+f)
