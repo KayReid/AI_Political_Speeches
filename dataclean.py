@@ -26,10 +26,10 @@ delete_list = ["hillary", "clinton", "donald", "trump", "mike",
                "vladimir", "putin", "democratic", "republican", "democrat",
                "<audience", "<crowd", "<title", "<title=", "<question:", "<unknown:",
                "<date:", "republican", "tim", "kaine", "hillary!", "(applause)",
-               "<applause>", "(inaudible)", "<booing>", "<ph>", "<:>", "<:", ">",
+               "<applause>", "(inaudible)", "<booing>", "<ph>", "<:>", "<:", ">", "<",
                "(laughter)", "(ph)", ":", "<unidentified female", "<unidentified male",
-               ",", ".","!","\"", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
-line_list = ["<audience", "<crowd", "<title", "<date", "<question"]
+               ",", ".","!","\"", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "?",
+               "-"]
 
 for f in os.listdir("text/clinton"):
     infile = open("text/clinton/"+f)
@@ -37,9 +37,6 @@ for f in os.listdir("text/clinton"):
         a = line.lower()
         for word in delete_list:
             a = a.replace(word, "")
-        #for word in line_list:
-         #   if (line.find(word)):
-          #      a = ""
         outclinton.write(a)
     infile.close()
 outclinton.close()
