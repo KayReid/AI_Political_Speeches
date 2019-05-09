@@ -1,9 +1,12 @@
 import re
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfTransformer
+import csv
 import numpy as np
 from sklearn.naive_bayes import MultinomialNB
 
+# https://www.analyticsvidhya.com/blog/2018/02/the-different-methods-deal-text-data-predictive-python/
+# https://sigdelta.com/blog/text-analysis-in-pandas/
 
 def word_generator(textfile: str):
 
@@ -25,7 +28,7 @@ def word_generator(textfile: str):
 
 
 # split into sets of 100
-def data_writer(textfile: str):
+def data_writer(candidate, textfile: str):
     # creates a word generator
     generator = word_generator(textfile)
     dataset = []
@@ -60,7 +63,7 @@ def vectorize(data):
     # count words in sample
     vec = CountVectorizer()
     ft = vec.fit_transform(data)
-
+    # https: // scikit - learn.org / stable / tutorial / text_analytics / working_with_text_data.html
     # turn into frequency analysis
     transformer = TfidfTransformer()
     return vec, transformer.fit_transform(ft)
@@ -104,6 +107,7 @@ if __name__ == "__main__":
     train_y = speeches_y[::2] # np.arange(0, len(speeches_y), 2)
     test_y = speeches_y[1::2] # np.arange(1, len(speeches_y), 2)
 
+    # TODO: vectorize before making an np array
     vec_train = vectorize(train_x)
     vec_test = vectorize(test_x)
 
@@ -116,8 +120,13 @@ if __name__ == "__main__":
     test_x = vec.transform(test_x)
     print(test_x.shape)
     # test_x = test_x.reshape(-1,1)
-    predicted = clf.predict(test_x)
+    print(clf.predict(test_x))
 
-    print(np.mean(predicted == test_y))
+    """
+    twenty_test = fetch_20newsgroups(subset='test', categories=categories, shuffle=True, random_state=42)
+    docs_test = twenty_test.data
+    predicted = text_clf.predict(docs_test)
+    np.mean(predicted == twenty_test.target) 
+    """
 
 
