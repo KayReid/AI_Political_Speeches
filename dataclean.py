@@ -29,7 +29,7 @@ delete_list = ["hillary", "clinton", "donald", "trump", "mike",
                "<applause>", "(inaudible)", "<booing>", "<ph>", "<:>", "<:", ">", "<",
                "(laughter)", "(ph)", ":", "<unidentified female", "<unidentified male",
                ",", ".","!","\"", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "?",
-               "-"]
+               "-", "=", ";", "hannity", "paronto"]
 
 for f in os.listdir("text/clinton"):
     infile = open("text/clinton/"+f)

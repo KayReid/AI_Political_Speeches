@@ -1,15 +1,9 @@
 import re
-import pandas as pd
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfTransformer
-import csv
 import numpy as np
 from sklearn.naive_bayes import MultinomialNB
-from sklearn.svm import SVC
-from sklearn.model_selection import train_test_split
 
-# https://www.analyticsvidhya.com/blog/2018/02/the-different-methods-deal-text-data-predictive-python/
-# https://sigdelta.com/blog/text-analysis-in-pandas/
 
 def word_generator(textfile: str):
 
@@ -31,88 +25,99 @@ def word_generator(textfile: str):
 
 
 # split into sets of 100
-def csv_writer(candidate, textfile: str, csvfile: str):
+def data_writer(textfile: str):
     # creates a word generator
     generator = word_generator(textfile)
+    dataset = []
 
     try:
-        with open(csvfile, mode='w') as test_file:
-            # initialize
-            writer = csv.writer(test_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-            writer.writerow(['candidate', 'data'])
+        # loop through and read the words
+        while True:
+            data = ""
 
-            while True:
-                data = ""
-
-                # group into sets of 100
-                for _ in range(100):
-                    data += " " + next(generator)
-
-                writer.writerow([candidate, data])
+            # group into sets of 100
+            for _ in range(100):
+                data += " " + next(generator)
+            dataset.append(data)
 
     except StopIteration:
-        # print("Document processed.")
         pass
 
+    return dataset
 
-def csv_reader(filename : str):
-    df = pd.read_csv(filename)
-    return df
+
+# get the speakers
+def generate_y(speaker, data):
+    y = []
+
+    for _ in range(len(data)):
+        y.append(speaker)
+
+    return y
 
 
 def vectorize(data):
+    # count words in sample
     vec = CountVectorizer()
-    ft = vec.fit_transform(data['data'])
+    ft = vec.fit_transform(data)
 
-    # https: // scikit - learn.org / stable / tutorial / text_analytics / working_with_text_data.html
-    tfidf_transformer = TfidfTransformer()
-    ft_transformer = tfidf_transformer.fit_transform(ft)
-
-    return ft_transformer
+    # turn into frequency analysis
+    transformer = TfidfTransformer()
+    return vec, transformer.fit_transform(ft)
 
 
-def combine(clinton_data, trump_data):
-    frames = [clinton_data, trump_data]
+def combine(dataOne, dataTwo):
+    # combine two datasets and turn into np arrays
+    data = []
 
-    combo = pd.concat(frames)
-    return combo
+    for datum in dataOne:
+        data.append(datum)
+
+    for datum in dataTwo:
+        data.append(datum)
+
+    return np.array(data)
 
 
 if __name__ == "__main__":
 
-    # speakers = {'clinton': 0, 'trump': 1}
-    csv_writer('clinton', 'test.txt', 'test.csv')
-    csv_writer('trump', 'test.txt', 'test2.csv')
-    train = csv_reader('test.csv')
-    train2 = csv_reader('test2.csv')
+    speakers = {0: 'clinton', 1: 'trump'}
 
-    speech_data = combine(train, train2)
+    # get the np arrays
+    clinton_x = data_writer(0, 'test.txt')
+    clinton_y = generate_y(0, clinton_x)
+    trump_x = data_writer(1, 'test.txt')
+    trump_y = generate_y(1, trump_x)
 
-    # experiment with word count
-    # train['word_count'] = train['data'].apply(lambda x: len(str(x).split(" ")))
-    # train[['data', 'word_count']].head()
-    # train['data'] = train['data'].apply(lambda x: TextBlob(x).words)
+    speeches_x = combine(clinton_x, trump_x)
+    print(len(clinton_x))
+    print(len(trump_x))
+    speeches_y = combine(clinton_y, trump_y)
 
-    # train and test split
-    train, test = train_test_split(speech_data, test_size=0.2)
+    # do frequency analysis on text
+    vec, vect = vectorize(speeches_x)
 
-    test_vec = vectorize(test)
-    train_vec = vectorize(train)
+    # split data
+    train_x = speeches_x[::2] # np.arange(0, len(speeches_x), 2)
+    test_x = speeches_x[1::2] # np.arange(1, len(speeches_x), 2)
 
-    """
-    frequency_vec = vectorize(speech_data)
-    print(frequency_vec.shape)
-    print(frequency_vec)
-    clf = MultinomialNB().fit(frequency_vec, speech_data['candidate'])
-    """
+    train_y = speeches_y[::2] # np.arange(0, len(speeches_y), 2)
+    test_y = speeches_y[1::2] # np.arange(1, len(speeches_y), 2)
+
+    vec_train = vectorize(train_x)
+    vec_test = vectorize(test_x)
 
     # Train a Naive Bayes classifier
     clf = MultinomialNB()
-    clf.fit(train_vec, train['candidate'])
+    clf.fit(vect, speeches_y)
 
     # Estimate its accuracy
-    print(test_vec.shape)
-    print(test['candidate'].shape)
-    print(clf.score(test_vec, test['candidate']))
+    print(vect.shape)
+    test_x = vec.transform(test_x)
+    print(test_x.shape)
+    # test_x = test_x.reshape(-1,1)
+    predicted = clf.predict(test_x)
+
+    print(np.mean(predicted == test_y))
 
 
