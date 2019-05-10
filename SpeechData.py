@@ -35,6 +35,8 @@ clf.fit(vect, speeches_y)
 
 # estimate its accuracy
 test_x = vec.transform(test_x)
+
+print(vect)
 predicted = clf.predict(test_x)
 
 print("Prediction ratio:", np.mean(predicted == test_y))
@@ -59,5 +61,8 @@ clf.fit(vect, speeches_y)
 # estimate its accuracy
 txt = vec.transform(txt)
 predicted = clf.predict(txt)
+
+# print most popular words
+print(freq_words(vec, vect, 10))
 
 # print("Prediction ratio 2:", np.mean(predicted == tyt))

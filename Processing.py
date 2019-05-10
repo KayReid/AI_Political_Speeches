@@ -78,3 +78,16 @@ def combine(dataOne, dataTwo):
     return np.array(data)
 
 
+# shows top n words
+def frequent_words(vec, n):
+    sum_words = vec.sum()
+    words_freq = [(word, sum_words[0, idx]) for word, idx in vec.vocabulary_.items()]
+    words_freq = sorted(words_freq, key=lambda x: x[1], reverse=True)
+    return words_freq[:n]
+
+def freq_words(vec, vect,  n):
+    freqs = zip(vec.get_feature_names(), vect.sum(axis=0).tolist()[0])
+    # sort from largest to smallest
+    print(sorted(freqs, key=lambda x: -x[1]))
+
+
