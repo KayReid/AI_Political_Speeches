@@ -37,7 +37,7 @@ for f in os.listdir("text/clinton"):
     for line in infile:
         a = line.lower()
         for word in delete_list:
-            a = a.replace(word, "")
+            a = a.replace(word, " ")
         outclinton.write(a)
     infile.close()
 outclinton.close()
@@ -47,7 +47,7 @@ for f in os.listdir("text/trump"):
     for line in infile:
         a = line.lower()
         for word in delete_list:
-            a = a.replace(word, "")
+            a = a.replace(word, " ")
         # for word in line_list:
            # if (line.find(word)):
                 #a = ""
