@@ -88,6 +88,6 @@ def frequent_words(vec, n):
 def freq_words(vec, vect,  n):
     freqs = zip(vec.get_feature_names(), vect.sum(axis=0).tolist()[0])
     # sort from largest to smallest
-    print(sorted(freqs, key=lambda x: -x[1]))
-
+    sorted_freqs = sorted(freqs, key=lambda x: -x[1])
+    print(sorted_freqs[:n])
 
