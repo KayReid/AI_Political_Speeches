@@ -2,7 +2,7 @@ import os
 outclinton = open("text/clinton.txt", "w+")
 outtrump = open("text/trump.txt", "w+")
 delete_list = [",", ".","!","\"","-", "=", ";",
-               " hillary ", " clinton ", " donald ", " trump ", " mike ",
+               "hillary ", "clinton", "donald", "trump", "mike",
                "pence", "bill", "chelsea", "barack", "obama", "joe",
                "biden", "michelle", "bernie", "sanders", " ted ", "cruz",
                "gary", "johnson", "jill", "stein", "lincoln", "chafee",
